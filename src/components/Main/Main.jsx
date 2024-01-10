@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Header } from "./style";
 import axios from "axios";
 import { BASE_URL } from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import { userType } from "../../Const/usetTypes";
+import { store } from "../../redux/store";
 
 function Main() {
   const data = useSelector((store) => store.UsersReducer.users);
+  const [editData, setEditData] = useState({ name: "", surname: "", id: null });
 
   let isGetLoading = useSelector(
     (store) => store.UsersReducer.isUserGetLoading
@@ -57,8 +59,37 @@ function Main() {
     surname.current.value = "";
   }
 
-  function deleteUser() {
-    axios
+  async function deleteUser(id) {
+    await axios
+      .delete(BASE_URL + "/users/" + id)
+      .then((res) => {
+        dispatch({ type: userType.delUser, payload: id });
+      })
+      .catch((error) => console.log(error));
+  }
+
+  async function editedUser(data, id) {
+    await axios
+      .put(BASE_URL + "/users/" + id, data)
+      .then((res) => {
+        dispatch({ type: userType.editUser, payload: data });
+      })
+      .catch((error) => console.log(error));
+  }
+
+  function editedForm(event) {
+    event.preventDefault();
+    if (editData.name == "" || editData.surname == "" || !editData.id) {
+      alert("Malumot jo'natilmadi");
+    } else {
+      const newEditedUserObj = {
+        id: editData.id,
+        name: editData.name,
+        surname: editData.surname,
+      };
+      editedUser(newEditedUserObj, editData.id);
+    }
+    setEditData({ name: "", surname: "", id: null });
   }
 
   return (
@@ -82,6 +113,35 @@ function Main() {
           />
           <button className="add-name-surname btn btn-success">Submit</button>
         </form>
+        <form onSubmit={(event) => editedForm(event)} className="edit-form">
+          <input
+            // value={editedName}
+            // ref={userName}
+            value={editData.name}
+            type="text"
+            className="form-control edit-name"
+            placeholder="please write edit-user_name..."
+            required
+            onChange={(evt) =>
+              setEditData((p) => ({ ...p, name: evt.target.value }))
+            }
+          />
+          <input
+            // value={}
+            // ref={userSurname}
+            value={editData.surname}
+            type="text"
+            className="form-control edit-surname"
+            placeholder="please write edit-user_surname..."
+            required
+            onChange={(evt) =>
+              setEditData((p) => ({ ...p, surname: evt.target.value }))
+            }
+          />
+          <button className="add-name-surname btn btn-primary">
+            Edit & Submit
+          </button>
+        </form>
         <br />
         <table className="table">
           <thead className="table-head">
@@ -100,10 +160,32 @@ function Main() {
                 <td>{item.name}</td>
                 <td>{item.surname}</td>
                 <td>
-                  <button className="btn btn-danger">Delete</button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      const coniform = window.confirm("Do you want to delete?");
+                      if (coniform) {
+                        alert("The data deleted successfully :)");
+                        deleteUser(item.id);
+                      }
+                    }}
+                  >
+                    Delete
+                  </button>
                 </td>
                 <td>
-                  <button className="btn btn-warning">Edit</button>
+                  <button
+                    onClick={() =>
+                      setEditData((p) => ({
+                        name: item.name,
+                        surname: item.surname,
+                        id: item.id,
+                      }))
+                    }
+                    className="btn btn-warning"
+                  >
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))}

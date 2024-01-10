@@ -42,4 +42,15 @@ export const Header = styled.div`
   .load-none {
     display: none;
   }
+  .edit-form {
+    margin-top: 33px;
+    display: flex;
+    gap: 22px;
+    .edit-name {
+      width: 33%;
+    }
+    .edit-surname {
+      width: 33%;
+    }
+  }
 `;

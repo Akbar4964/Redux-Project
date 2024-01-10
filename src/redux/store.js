@@ -22,6 +22,20 @@ function userReducer(state = initialState, action) {
         ...state,
         users: [action.payload, ...state.users],
       };
+    case userType.delUser:
+      const filteredUsers = state.users.filter(
+        (user) => user.id !== action.payload
+      );
+      return { ...state, users: filteredUsers };
+    case userType.editUser:
+      const editedUser = state.users.map((item) => {
+        if (item.id === action.payload.id) {
+          return action.payload;
+        }
+        return item;
+      });
+      console.log(editedUser);
+      return { ...state, users: [...editedUser] };
     default:
       return state;
   }

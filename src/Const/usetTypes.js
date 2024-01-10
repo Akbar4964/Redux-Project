@@ -1,4 +1,6 @@
 export const userType = {
   user: "USER",
-  addUser:"ADDUSER"
+  addUser: "ADDUSER",
+  delUser: "DELETEUSER",
+  editUser: "EDITUSER",
 };

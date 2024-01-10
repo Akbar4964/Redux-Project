@@ -1,44 +1,19 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "John",
-      "surname": "Johnes"
+      "name": "akbar123",
+      "surname": "akbarjonov123",
+      "id": 2
     },
     {
-      "id": 2,
-      "name": "James",
-      "surname": "Brown"
+      "id": 3,
+      "name": "salom21312222",
+      "surname": "salom22222222"
     },
     {
-      "name": "dasdassd",
-      "surname": "saddasdsa",
-      "id": 3
-    },
-    {
-      "name": "dsadsadsads",
-      "surname": "dsadsaadsasd",
+      "name": "askdsakjads",
+      "surname": "dassads",
       "id": 4
-    },
-    {
-      "name": "adsdsaads",
-      "surname": "adssddsadsa",
-      "id": 5
-    },
-    {
-      "name": "Akbar",
-      "surname": "Shuhratullayev",
-      "id": 6
-    },
-    {
-      "name": "Akbar",
-      "surname": "Shuhartullayev",
-      "id": 7
-    },
-    {
-      "name": "ads",
-      "surname": "adsads",
-      "id": 8
     }
   ]
 }
