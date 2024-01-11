@@ -1,19 +1,14 @@
 {
   "users": [
     {
-      "name": "akbar123",
-      "surname": "akbarjonov123",
-      "id": 2
+      "id": 1,
+      "name": "Akbar",
+      "surname": "Shuhratullayev"
     },
     {
-      "id": 3,
-      "name": "salom21312222",
-      "surname": "salom22222222"
-    },
-    {
-      "name": "askdsakjads",
-      "surname": "dassads",
-      "id": 4
+      "id": 2,
+      "name": "Akbarjon",
+      "surname": "Shuhratullayev"
     }
   ]
 }

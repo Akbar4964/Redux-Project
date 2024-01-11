@@ -5,6 +5,7 @@ import { BASE_URL } from "../..";
 import { useDispatch, useSelector } from "react-redux";
 import { userType } from "../../Const/usetTypes";
 import { store } from "../../redux/store";
+import { toast } from "react-toastify";
 
 function Main() {
   const data = useSelector((store) => store.UsersReducer.users);
@@ -22,7 +23,21 @@ function Main() {
       .then((res) => {
         dispatch({ type: userType.user, payload: res.data });
       })
-      .catch((error) => console.log(error));
+      .catch((error) =>
+        toast.info(
+          "HTTPS request is invalid or there is some error Please try again",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          }
+        )
+      );
   }, []);
 
   const name = useRef(null);
@@ -34,6 +49,16 @@ function Main() {
       .post(BASE_URL + "/users", data)
       .then((res) => {
         dispatch({ type: userType.addUser, payload: res.data });
+        toast.success("Datas added successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         // if (res.status == 200) {
         //   setData((prev) =>
         //     prev.map((item) => {
@@ -45,7 +70,18 @@ function Main() {
         //   );
         // }
       })
-      .catch((error) => console.log(error));
+      .catch((error) =>
+        toast.error("Failed to add information, please try again", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        })
+      );
   }
 
   function addedUser(event) {
@@ -64,8 +100,29 @@ function Main() {
       .delete(BASE_URL + "/users/" + id)
       .then((res) => {
         dispatch({ type: userType.delUser, payload: id });
+        toast.success("Data deleted successfully :)", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) =>
+        toast.warn("Data was not deleted :(", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        })
+      );
   }
 
   async function editedUser(data, id) {
@@ -73,14 +130,44 @@ function Main() {
       .put(BASE_URL + "/users/" + id, data)
       .then((res) => {
         dispatch({ type: userType.editUser, payload: data });
+        toast("Your information has been edited successfully", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       })
-      .catch((error) => console.log(error));
+      .catch((error) =>
+        toast("Your information has not been edited", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        })
+      );
   }
 
   function editedForm(event) {
     event.preventDefault();
     if (editData.name == "" || editData.surname == "" || !editData.id) {
-      alert("Malumot jo'natilmadi");
+      toast.info("Please, select one of the details in the pass to edit", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } else {
       const newEditedUserObj = {
         id: editData.id,
@@ -165,7 +252,6 @@ function Main() {
                     onClick={() => {
                       const coniform = window.confirm("Do you want to delete?");
                       if (coniform) {
-                        alert("The data deleted successfully :)");
                         deleteUser(item.id);
                       }
                     }}
