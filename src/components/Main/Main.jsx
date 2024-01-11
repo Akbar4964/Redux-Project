@@ -173,7 +173,6 @@ function Main() {
         id: editData.id,
         name: editData.name,
         surname: editData.surname,
-
       };
       editedUser(newEditedUserObj, editData.id);
     }
