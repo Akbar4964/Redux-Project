@@ -34,7 +34,6 @@ function userReducer(state = initialState, action) {
         }
         return item;
       });
-      console.log(editedUser);
       return { ...state, users: [...editedUser] };
     default:
       return state;
